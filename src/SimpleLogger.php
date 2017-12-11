@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Smalex86\Logger package.
+ * This file is part of the smalex86\logger package.
  *
  * (c) Alexandr Smirnov <mail_er@mail.ru>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Smalex86\Logger;
+namespace smalex86\logger;
 
 /**
  * Class for simple logging of information
