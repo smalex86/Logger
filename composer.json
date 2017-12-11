@@ -1,0 +1,26 @@
+{
+    "name": "Smalex86/Logger",
+    "homepage": "https://github.com/smalex86/Logger",
+    "description": "Simple logging system",
+    "keywords": [
+        "logger"
+    ],
+    "license": "/LICENCE",
+    "authors": [
+        {
+            "name": "Alexandr Smirnov",
+            "email": "mail_er@mail.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smalex86\\Logger\\": "src"
+        }
+    },
+    "support": {
+        "issues": "https://github.com/smalex86/Logger/issues"
+    }
+}
