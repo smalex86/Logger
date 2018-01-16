@@ -12,7 +12,7 @@ Simple logging system
         }
     ],
     "require": {
-        "Smalex86/Logger": "1.5.1"
+        "smalex86/logger": "1.5.1"
     }
 }
 ```
