@@ -1,6 +1,6 @@
 {
-    "name": "Smalex86/Logger",
-    "homepage": "https://github.com/smalex86/Logger",
+    "name": "smalex86/logger",
+    "homepage": "https://github.com/smalex86/logger",
     "description": "Simple logging system",
     "keywords": [
         "logger"
@@ -18,10 +18,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Smalex86\\Logger\\": "src"
+            "smalex86\\logger\\": "src"
         }
     },
     "support": {
-        "issues": "https://github.com/smalex86/Logger/issues"
+        "issues": "https://github.com/smalex86/logger/issues"
     }
 }

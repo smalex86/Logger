@@ -8,7 +8,7 @@ Simple logging system
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Smalex86/Logger"
+            "url": "https://github.com/smalex86/logger"
         }
     ],
     "require": {
@@ -21,7 +21,7 @@ Simple logging system
 
 Use it with autoloader PSR-4:
 ```
-use Smalex86\Logger\SimpleLogger;
+use smalex86\logger\SimpleLogger;
 ```
 If you want use dynamic object suitable with Psr\Log\LoggerInterface:
 ```
