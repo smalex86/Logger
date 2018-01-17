@@ -1,7 +1,7 @@
 # Logger
 Simple logging system
 
-## For use it write to composer.json: ##
+## To use this logger write to composer.json: ##
 
 ```
 {
@@ -12,24 +12,24 @@ Simple logging system
         }
     ],
     "require": {
-        "smalex86/logger": "1.5.1"
+        "smalex86/logger": "1.5.2"
     }
 }
 ```
 
-## And add next text to your project: ##
+## And add text below to your project:
 
 Use it with autoloader PSR-4:
 ```
 use smalex86\logger\SimpleLogger;
 ```
-If you want use dynamic object suitable with Psr\Log\LoggerInterface:
+If you want to use dynamic object suitable with Psr\Log\LoggerInterface write to project these commands:
 ```
 $logger = new SimpleLogger(4, 'syslog.log', __DIR__ . '/logs');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']); // PsrLog style
 $logger->debugD($data, $context, $logFilename); // Simple logger style
 ```
-And use it if you don't want use dynamic object:
+Or use it if you don't want to use dynamic object:
 ```
 SimpleLogger::toLog($msgStatus, $msg);
 ```
