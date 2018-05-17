@@ -1,7 +1,12 @@
 # Logger
-Simple logging system
+Simple logging system suitable with PsrLog.
+Package includes:
+* SimpleLogger
+* SimpleLoggerFactory
+* SimpleStaticLogger - not suitable with PsrLog
+* tests
 
-## For use it write to composer.json: ##
+## To use this logger write to composer.json: ##
 
 ```
 {
@@ -12,26 +17,21 @@ Simple logging system
         }
     ],
     "require": {
-        "smalex86/logger": "1.5.2"
+        "smalex86/logger": "1.6.0"
     }
 }
 ```
 
-## And add next text to your project: ##
+## And add text below to your project:
 
 Use it with autoloader PSR-4:
 ```
 use smalex86\logger\SimpleLogger;
 ```
-If you want use dynamic object suitable with Psr\Log\LoggerInterface:
+If you want to use dynamic object suitable with Psr\Log\LoggerInterface write to project these commands:
 ```
 $logger = new SimpleLogger(4, 'syslog.log', __DIR__ . '/logs');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']); // PsrLog style
-$logger->debugD($data, $context, $logFilename); // Simple logger style
-```
-And use it if you don't want use dynamic object:
-```
-SimpleLogger::toLog($msgStatus, $msg);
 ```
 
 ### Some examples ###
@@ -44,12 +44,4 @@ $logger->warning('warning test', ['36', '37']);
 $logger->notice('notice test');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']);
 $logger->debug('debug test', [__LINE__]);
-$logger->debugD('debugD test', [__LINE__], 'D.log');
-$logger->errorD('errorD test', ['class'=>'Class', __LINE__], 'D.log');
-$logger->importantD('importantD test', [], 'D.log');
-$logger->warningD('warningD test', [__LINE__], 'D.log');
-
-$logger->toLogD(7, 'toLogD test', [__LINE__], 'D.log');
-$logger->log(1, 'log test', []);
-$logger->log('error', 'log test 2', []);
 ```

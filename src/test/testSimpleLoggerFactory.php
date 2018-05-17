@@ -11,11 +11,10 @@
 
 include_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
-require '../SimpleLogger.php';
+use smalex86\logger\SimpleLoggerFactory;
 
-use smalex86\logger\SimpleLogger;
-
-$logger = new SimpleLogger;
+SimpleLoggerFactory::init(7, 'factory.log', dirname(__DIR__, 2) . '/logs/');
+$logger = SimpleLoggerFactory::getLogger();
 
 $logger->emergency('emergency test', ['test'=>'value', '32']);
 $logger->alert('alert test', ['test'=>'value', 1=>'33']);
@@ -25,15 +24,8 @@ $logger->warning('warning test', ['36', '37']);
 $logger->notice('notice test');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']);
 $logger->debug('debug test', [__LINE__]);
-$logger->debugD('debugD test', [__LINE__], 'D.log');
-$logger->errorD('errorD test', ['class'=>'Class', __LINE__], 'D.log');
-$logger->importantD('importantD test', [], 'D.log');
-$logger->warningD('warningD test', [__LINE__], 'D.log');
-
-$logger->toLogD(7, 'toLogD test', [__LINE__], 'D.log');
 $logger->log(1, 'log test', []);
 $logger->log('error', 'log test 2', []);
 
-echo $logger->getLogFolder();
-
+echo $logger->getLogFolder() . PHP_EOL;
 echo 'ok';
