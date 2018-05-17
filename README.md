@@ -1,5 +1,10 @@
 # Logger
-Simple logging system
+Simple logging system suitable with PsrLog.
+Package includes:
+* SimpleLogger
+* SimpleLoggerFactory
+* SimpleStaticLogger - not suitable with PsrLog
+* tests
 
 ## To use this logger write to composer.json: ##
 
@@ -12,7 +17,7 @@ Simple logging system
         }
     ],
     "require": {
-        "smalex86/logger": "1.5.2"
+        "smalex86/logger": "1.6.0"
     }
 }
 ```
@@ -27,11 +32,6 @@ If you want to use dynamic object suitable with Psr\Log\LoggerInterface write to
 ```
 $logger = new SimpleLogger(4, 'syslog.log', __DIR__ . '/logs');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']); // PsrLog style
-$logger->debugD($data, $context, $logFilename); // Simple logger style
-```
-Or use it if you don't want to use dynamic object:
-```
-SimpleLogger::toLog($msgStatus, $msg);
 ```
 
 ### Some examples ###
@@ -44,12 +44,4 @@ $logger->warning('warning test', ['36', '37']);
 $logger->notice('notice test');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']);
 $logger->debug('debug test', [__LINE__]);
-$logger->debugD('debugD test', [__LINE__], 'D.log');
-$logger->errorD('errorD test', ['class'=>'Class', __LINE__], 'D.log');
-$logger->importantD('importantD test', [], 'D.log');
-$logger->warningD('warningD test', [__LINE__], 'D.log');
-
-$logger->toLogD(7, 'toLogD test', [__LINE__], 'D.log');
-$logger->log(1, 'log test', []);
-$logger->log('error', 'log test 2', []);
 ```
