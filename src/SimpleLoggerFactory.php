@@ -5,36 +5,50 @@ namespace smalex86\logger;
 use smalex86\logger\SimpleLogger;
 
 /**
- * Description of SimpleLoggerFactory
+ * Factory for SimpleLogger
  *
- * @author smirnov
+ * @author Alexandr Smirnov <mail_er@mail.ru>
  */
 class SimpleLoggerFactory {
     
-    protected static $status;
+    /**
+     * max logger level
+     * @var int 
+     */
+    protected static $maxLevel;
+    /**
+     * Log filename
+     * @var string
+     */
     protected static $logFilename;
+    /**
+     * Folder contain log file
+     * @var string
+     */
     protected static $folder;
     
     /**
-     * Инициализация параметров
+     * Factory parameters init
      * 
-     * @param type $status
-     * @param type $logFilename
-     * @param type $folder
+     * @param int $maxLevel
+     * @param string $logFilename
+     * @param string $folder
      */
-    public static function init($status, $logFilename, $folder) {
-        self::$status = $status;
+    public static function init($maxLevel, $logFilename, $folder): void
+    {
+        self::$maxLevel = $maxLevel;
         self::$logFilename = $logFilename;
         self::$folder = $folder;
     }
     
     /**
-     * Создание Logger
+     * Method to get new logger
      * 
      * @return SimpleLogger
      */
-    public static function getLogger() {
-        return new SimpleLogger(self::$status, self::$logFilename, self::$folder);
+    public static function getLogger(): SimpleLogger
+    {
+        return new SimpleLogger(self::$maxLevel, self::$logFilename, self::$folder);
     }
     
 }
