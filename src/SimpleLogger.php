@@ -16,160 +16,93 @@ use Psr\Log\LoggerInterface;
 /**
  * Class for simple logging of information
  * @author Alexandr Smirnov <mail_er@mail.ru>
- * @version 1.4
  */
 class SimpleLogger implements LoggerInterface {
 
-  private static $statusWord = array(
+  private static $levelWord = array(
     0 => ['emergency', 'EMERGENCY'],
-    1 => ['alert', 'ALERT    '],
-    2 => ['critical', 'CRITICAL '],
-    3 => ['error', 'ERROR    '],
-    4 => ['warning', 'WARNING  '],
-    5 => ['notice', 'NOTICE   '],
-    6 => ['info', 'INFO     '],
-    7 => ['debug', 'DEBUG    ']
+    1 => ['alert',     'ALERT    '],
+    2 => ['critical',  'CRITICAL '],
+    3 => ['error',     'ERROR    '],
+    4 => ['warning',   'WARNING  '],
+    5 => ['notice',    'NOTICE   '],
+    6 => ['info',      'INFO     '],
+    7 => ['debug',     'DEBUG    ']
   );
   
-  private static $status = 7; 
-  private static $logfileDefault = 'syslog.log';
-  private static $folder = __DIR__ . '/logs/';
-    
-  /**
-   * Common function for write logs
-   * It writes log to file $logFileName
-   * @param int $msgStatus - see above
-   * @param string $msg string of message that will write to log
-   * @param string $logFileName log file name without path, log files are kept in root folder 'logs'
-   * @return boolean
-   */
-  public static function toLog($msgStatus, $msg, $context = array(), $logFileName = '') {
-    // check for requirement of writing
-    // it is determined by log status and msgStatus
-    if (self::$status < $msgStatus) {
-      return false;
-    }
-    // check empty of logFilename
-    if (!$logFileName) {
-      $logFileName = self::$logfileDefault;
-    }
-    // define msg status word
-    if (array_key_exists($msgStatus, self::$statusWord)) {
-      $msgStatusWord = self::$statusWord[$msgStatus][1];
-    } else {
-      $msgStatusWord = 'UNKNOWN  ';
-    }
-    // prepare context
-    $preparedContext = '';
-    if (!empty($context)) {
-      foreach ($context as $key=>$value) {     
-        if (is_numeric($key)) {
-          $preparedContext .= $value . '=>';
-        } else {
-          $preparedContext .= sprintf('(%s)%s=>', $key, $value);
-        }
-      }
-      $preparedContext = substr($preparedContext, 0, -2) . ' :: ';
-    }   
-    // folder existing check and creating
-    if (!file_exists(self::$folder)) {
-      mkdir(self::$folder);
-    }
-    // write message to log
-    return file_put_contents(realpath(self::$folder).'/'.$logFileName, 
-              sprintf('%s :: %s :: %s' . PHP_EOL, (new \DateTime())->format('Y-m-d H:i:s:v'), $msgStatusWord, 
-                $preparedContext . str_replace("\t", "", str_replace("\n", "", $msg))), 
-              FILE_APPEND);
-  }
+  private $maxLevel  = 7; 
+  private $logFile = 'syslog.log';
+  private $folder  = __DIR__ . '/logs/';
   
-  public function __construct($status = 7, $logFileName = '', $folder = '') {
-    self::$status = $status;
-    if ($logFileName) {
-      self::$logfileDefault = $logFileName;
+  /**
+   * Constructor
+   * @param int $maxLevel
+   * @param string $logFile
+   * @param string $folder
+   */
+  public function __construct($maxLevel = 7, $logFile = '', $folder = '') {
+    $this->maxLevel = $maxLevel;
+    if ($logFile) {
+      $this->logFile = $logFile;
     }
     if ($folder) {
-      self::$folder = $folder;
+      $this->folder = $folder;
     }
-    return true;
   }
   
   /**
-   * Dynamic method for writing message to logfile with name logFileName with level = status
-   * @param int $status
-   * @param string $msg
-   * @param string $logFileName
+   * Method for define of logging max level
+   * @param int $maxLevel
+   * @return boolean
+   */
+  public function setMaxLevel($maxLevel): void
+  {
+    $this->maxLevel= $maxLevel;
+  }
+  
+  /**
+   * Return max level of this logger
    * @return string
    */
-  public function toLogD($status, $msg, $context = array(), $logFileName = '') {
-    return self::toLog($status, $msg, $context, $logFileName);
+  public function getMaxLevel(): string
+  {
+    return $this->maxLevel;
   }
-    
+  
   /**
-   * Dynamic method for writing message to logfile with name logFileName (or default log filename) with level = error (1)
-   * @param string $msg
-   * @param string $logFileName
+   * Method for setting of log files default folder
+   * @param string $folder
    * @return boolean
    */
-  public function errorD($msg, $context = array(), $logFileName = '') {
-    return self::toLog(3, $msg, $context, $logFileName);
+  public function setLogFolder($folder): void
+  {
+    $this->folder = realpath($folder);
   }
   
   /**
-   * Dynamic method for writing message to logfile with name logFileName (or default log filename) with level = warning (2)
-   * @param string $msg
-   * @param string $logFileName
-   * @return boolean
-   */  
-  public function warningD($msg, $context = array(), $logFileName = '') {
-    return self::toLog(4, $msg, $context, $logFileName);
-  }
-  
-  /**
-   * Dynamic method for writing message to logfile with name logFileName (or default log filename) with level = important (0)
-   * @param string $msg
-   * @param string $logFileName
-   * @return boolean
-   */  
-  public function importantD($msg, $context = array(), $logFileName = '') {
-    return self::toLog(6, $msg, $context, $logFileName);
-  }
-  
-  /**
-   * Dynamic method for writing message to logfile with name logFileName (or default log filename) with level = debug (3)
-   * @param string $msg
-   * @param string $logFileName
-   * @return boolean
-   */  
-  public function debugD($msg, $context = array(), $logFileName = '') {
-    return self::toLog(7, $msg, $context, $logFileName);
-  }
-  
-  /**
-   * Method for define of logging default status
-   * @param type $status
-   * @return boolean
-   */
-  public static function setStatus($status) {
-    self::$status = $status;
-    return true;
-  }
-  
-  /**
-   * Method for setting of logfiles default folder
-   * @param type $folder
-   * @return boolean
-   */
-  public static function setLogFolder($folder) {
-    self::$folder = realpath($folder);
-    return true;
-  }
-  
-  /**
-   * Method for getting of logfiles default folder 
+   * Method for getting of log files default folder 
    * @return type
    */
-  public static function getLogFolder() {
-    return self::$folder;
+  public function getLogFolder() {
+    return $this->folder;
+  }
+  
+  /**
+   * Set log filename
+   * @param string $logfile
+   */
+  public function setLogFile($logfile): void
+  {
+    $this->logFile = $logfile;
+  }
+  
+  /**
+   * Get log filename
+   * @return string
+   */
+  public function getLogfile(): string 
+  {
+    return $this->logFile;
   }
 
   /**
@@ -292,7 +225,7 @@ class SimpleLogger implements LoggerInterface {
    * @return int
    */
   protected function getLogLevelFromRsrLogLevel($psrLogLevel) {
-    foreach (self::$statusWord as $key => $value) {
+    foreach (self::$levelWord as $key => $value) {
       if ($value[0] == $psrLogLevel) {
         return $key;
       }
@@ -315,8 +248,40 @@ class SimpleLogger implements LoggerInterface {
     if (is_string($level)) {
       $level = $this->getLogLevelFromRsrLogLevel($level);
     }
-    return self::toLog($level, $message, $context);
+    // check for requirement of writing
+    // it is determined by log maxLevel and msg level
+    if ($this->maxLevel < $level) {
+      return false;
+    }
+    // define msg status word
+    if (array_key_exists($level, self::$levelWord)) {
+      $msgStatusWord = self::$levelWord[$level][1];
+    } else {
+      $msgStatusWord = 'UNKNOWN  ';
+    }
+    // prepare context
+    $preparedContext = '';
+    if (!empty($context)) {
+      foreach ($context as $key=>$value) {     
+        if (is_numeric($key)) {
+          $preparedContext .= $value . '=>';
+        } else {
+          $preparedContext .= sprintf('(%s)%s=>', $key, $value);
+        }
+      }
+      $preparedContext = substr($preparedContext, 0, -2) . ' :: ';
+    }   
+    // folder existing check and creating
+    if (!file_exists($this->folder)) {
+      mkdir($this->folder);
+    }
+    // write message to log
+    return file_put_contents(realpath($this->folder) . DIRECTORY_SEPARATOR . $this->logFile, 
+              sprintf('%s :: %s :: %s' . PHP_EOL, 
+                      (new \DateTime())->format('Y-m-d H:i:s:v'), 
+                      $msgStatusWord, 
+                      $preparedContext . $message),
+              FILE_APPEND);
   }
-  
-  
+
 }
