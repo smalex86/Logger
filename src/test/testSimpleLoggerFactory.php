@@ -14,7 +14,7 @@ include_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 use smalex86\logger\SimpleLoggerFactory;
 
 SimpleLoggerFactory::init(7, 'factory.log', dirname(__DIR__, 2) . '/logs/');
-$logger = SimpleLoggerFactory::getLogger();
+$logger = SimpleLoggerFactory::getFileLogger();
 
 $logger->emergency('emergency test', ['test'=>'value', '32']);
 $logger->alert('alert test', ['test'=>'value', 1=>'33']);
@@ -27,5 +27,5 @@ $logger->debug('debug test', [__LINE__]);
 $logger->log(1, 'log test', []);
 $logger->log('error', 'log test 2', []);
 
-echo $logger->getLogFolder() . PHP_EOL;
+echo $logger->folder . $logger->logFile . PHP_EOL;
 echo 'ok';
