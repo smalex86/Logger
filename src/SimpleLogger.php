@@ -12,12 +12,13 @@
 namespace smalex86\logger;
 
 use Psr\Log\LoggerInterface;
+use Psr\Log\AbstractLogger;
 
 /**
  * Class for simple logging of information
  * @author Alexandr Smirnov <mail_er@mail.ru>
  */
-class SimpleLogger implements LoggerInterface {
+class SimpleLogger extends AbstractLogger implements LoggerInterface {
 
   private static $levelWord = array(
     0 => ['emergency', 'EMERGENCY'],
