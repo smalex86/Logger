@@ -1,9 +1,13 @@
 # Logger
 Simple logging system suitable with PsrLog.
-Package includes:
-* SimpleLogger
-* SimpleLoggerFactory
+* Logger - base logger class including and managed routes
+* Route - base class for routes
+* SimpleLoggerFactory - factory simple (file) logger
 * SimpleStaticLogger - not suitable with PsrLog
+* route:
+    * DatabaseRoute - route for database logging
+    * FileRoute - ex SimpleLogger, route for file logging
+    * SyslogRoute - syslog route
 * tests
 
 ## To use this logger write to composer.json: ##
@@ -17,7 +21,7 @@ Package includes:
         }
     ],
     "require": {
-        "smalex86/logger": "1.6.1"
+        "smalex86/logger": "1.7.0"
     }
 }
 ```
@@ -26,11 +30,29 @@ Package includes:
 
 Use it with autoloader PSR-4:
 ```
-use smalex86\logger\SimpleLogger;
+use smalex86\logger\Logger;
 ```
 If you want to use dynamic object suitable with Psr\Log\LoggerInterface write to project these commands:
 ```
-$logger = new SimpleLogger(4, 'syslog.log', __DIR__ . '/logs');
+$logger = new Logger();
+$logger->routeList->attach(new smalex86\logger\route\FileRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7,
+    'logFile' => 'test.log',
+    'folder' => dirname(__DIR__, 2) . '/logs/'
+]));
+$logger->routeList->attach(new smalex86\logger\route\DatabaseRoute([
+    'isEnabled' => true,
+    'maxLevel' => 6,
+    'dsn' => 'mysql:host=localhost;port=3306;dbname=test',
+    'username' => 'root',
+    'password' => '',
+    'table' => 'project_log'    
+]));
+$logger->routeList->attach(new smalex86\logger\route\SyslogRoute([
+    'isEnabled' => true,
+    'maxLevel' => 5
+]));
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']); // PsrLog style
 ```
 
