@@ -11,13 +11,16 @@
 
 include_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
-use smalex86\logger\route\FileRoute;
+use smalex86\logger\Logger;
 
-$logger = new FileRoute([
-            'maxLevel' => 7, 
-            'logFile' => 'test.log', 
-            'folder' => dirname(__DIR__, 2) . '/logs/']
-        );
+$logger = new Logger();
+$logger->routeList->attach(new smalex86\logger\route\FileRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7,
+    'logFile' => 'test.log',
+    'folder' => dirname(__DIR__, 2) . '/logs/'
+]));
+
 
 $logger->emergency('emergency test', ['test'=>'value', '32']);
 $logger->alert('alert test', ['test'=>'value', 1=>'33']);
@@ -30,6 +33,4 @@ $logger->debug('debug test', [__LINE__]);
 $logger->log(1, 'log test', []);
 $logger->log('error', 'log test 2', []);
 
-echo $logger->maxLevel . PHP_EOL;
-echo $logger->folder . $logger->logFile . PHP_EOL;
 echo 'ok';

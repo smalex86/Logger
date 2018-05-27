@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace smalex86\logger\routes;
+namespace smalex86\logger\route;
 
 use smalex86\logger\Route;
 
@@ -17,7 +17,7 @@ use smalex86\logger\Route;
  * Class for file logging of information
  * @author Alexandr Smirnov <mail_er@mail.ru>
  */
-class FileLogger extends Route {
+class FileRoute extends Route {
   
   /**
    * Log file name

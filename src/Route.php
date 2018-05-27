@@ -71,9 +71,7 @@ abstract class Route extends AbstractLogger implements LoggerInterface {
       {
         switch ($attribute) {
           case 'maxLevel':
-            echo 'maxLevel = ' . $value . PHP_EOL;
             $this->maxLevel = $this->getLogLevelFromRsrLogLevel($value);
-            echo 'this->maxLevel = ' . $this->maxLevel . PHP_EOL;
             break;
           default:
             $this->{$attribute} = $value;

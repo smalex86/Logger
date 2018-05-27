@@ -2,7 +2,7 @@
 
 namespace smalex86\logger;
 
-use smalex86\logger\routes\FileLogger;
+use smalex86\logger\route\FileRoute;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -49,7 +49,7 @@ class SimpleLoggerFactory {
      */
     public static function getFileLogger(): LoggerInterface
     {
-        return new FileLogger([
+        return new FileRoute([
             'maxLevel' => self::$maxLevel, 
             'logFile' => self::$logFilename, 
             'folder' => self::$folder]);
