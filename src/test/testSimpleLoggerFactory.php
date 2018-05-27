@@ -23,7 +23,7 @@ $logger->error('error test', ['34', '35']);
 $logger->warning('warning test', ['36', '37']);
 $logger->notice('notice test');
 $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']);
-$logger->debug('debug test', [__LINE__]);
+$logger->debug('debug test', [__FILE__,__LINE__]);
 $logger->log(1, 'log test', []);
 $logger->log('error', 'log test 2', []);
 

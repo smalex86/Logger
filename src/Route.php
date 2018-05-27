@@ -52,6 +52,11 @@ abstract class Route extends AbstractLogger implements LoggerInterface {
    * @var int
    */
   public $maxLevel = 7;
+  /**
+   * Message template
+   * @var string 
+   */
+  public $template = "{message} {context}";
 
   /**
    * Constructor
@@ -130,6 +135,18 @@ abstract class Route extends AbstractLogger implements LoggerInterface {
     } else {
       return 'UNKNOWN  ';
     }
+  }
+  
+  /**
+   * Get file and line from stacktrace in array view
+   * @return array
+   */
+  protected function getFileLine(): array
+  {
+    $dbt = debug_backtrace();    
+    $result['file'] = $dbt[count($dbt)-1]['file'];
+    $result['line'] = $dbt[count($dbt)-1]['line'];
+    return $result;
   }
   
 }

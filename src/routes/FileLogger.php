@@ -29,6 +29,11 @@ class FileLogger extends Route {
    * @var string
    */
   public $folder  = __DIR__ . '/logs/';
+  /**
+   * Message template
+   * @var string 
+   */
+  public $template = '{date} :: {level} :: {file}=>{line} :: {message} {context}';
   
   /**
    * Constructor
@@ -59,29 +64,27 @@ class FileLogger extends Route {
     }
     // define msg status word
     $msgStatusWord = $this->getStatusWord($level);
-    // prepare context
-    $preparedContext = '';
-    if (!empty($context)) {
-      foreach ($context as $key=>$value) {     
-        if (is_numeric($key)) {
-          $preparedContext .= $value . '=>';
-        } else {
-          $preparedContext .= sprintf('(%s)%s=>', $key, $value);
-        }
-      }
-      $preparedContext = substr($preparedContext, 0, -2) . ' :: ';
-    }   
+    
     // folder existing check and creating
     if (!file_exists($this->folder)) {
       mkdir($this->folder);
     }
-    // write message to log
-    return file_put_contents(realpath($this->folder) . DIRECTORY_SEPARATOR . $this->logFile, 
-              sprintf('%s :: %s :: %s' . PHP_EOL, 
-                      (new \DateTime())->format('Y-m-d H:i:s:v'), 
-                      $msgStatusWord, 
-                      $preparedContext . $message),
-              FILE_APPEND);
+    
+    // pull file and line
+    $fileLine = $this->getFileLine();
+    
+    // put message to log file
+    return file_put_contents(
+            realpath($this->folder) . DIRECTORY_SEPARATOR . $this->logFile, 
+            trim(strtr($this->template, [
+              '{date}' => $this->getDate(),
+              '{level}' => $msgStatusWord,
+              '{file}' => $fileLine['file'],
+              '{line}' => $fileLine['line'],
+              '{message}' => $message,
+              '{context}' => $this->contextStringify($context),
+            ])) . PHP_EOL,
+            FILE_APPEND);
   }
 
 }
