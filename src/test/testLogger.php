@@ -20,6 +20,18 @@ $logger->routeList->attach(new smalex86\logger\route\FileRoute([
     'logFile' => 'test.log',
     'folder' => dirname(__DIR__, 2) . '/logs/'
 ]));
+$logger->routeList->attach(new smalex86\logger\route\DatabaseRoute([
+    'isEnabled' => true,
+    'maxLevel' => 6,
+    'dsn' => 'mysql:host=localhost;port=3306;dbname=test',
+    'username' => 'root',
+    'password' => '',
+    'table' => 'project_log'    
+]));
+$logger->routeList->attach(new smalex86\logger\route\SyslogRoute([
+    'isEnabled' => true,
+    'maxLevel' => 5
+]));
 
 
 $logger->emergency('emergency test', ['test'=>'value', '32']);
