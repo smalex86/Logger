@@ -17,7 +17,7 @@ Package includes:
         }
     ],
     "require": {
-        "smalex86/logger": "1.6.0"
+        "smalex86/logger": "1.6.1"
     }
 }
 ```

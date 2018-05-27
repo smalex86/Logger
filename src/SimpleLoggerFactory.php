@@ -2,7 +2,8 @@
 
 namespace smalex86\logger;
 
-use smalex86\logger\SimpleLogger;
+use smalex86\logger\routes\FileLogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Factory for SimpleLogger
@@ -42,13 +43,16 @@ class SimpleLoggerFactory {
     }
     
     /**
-     * Method to get new logger
+     * Method to get new FileLogger
      * 
-     * @return SimpleLogger
+     * @return LoggerInterface
      */
-    public static function getLogger(): SimpleLogger
+    public static function getFileLogger(): LoggerInterface
     {
-        return new SimpleLogger(self::$maxLevel, self::$logFilename, self::$folder);
+        return new FileLogger([
+            'maxLevel' => self::$maxLevel, 
+            'logFile' => self::$logFilename, 
+            'folder' => self::$folder]);
     }
     
 }
