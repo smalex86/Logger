@@ -43,9 +43,8 @@ class SimpleStaticLogger {
   /**
    * Method for define of logging max level
    * @param int $level
-   * @return boolean
    */
-  public static function setMaxLevel($level): void
+  public static function setMaxLevel($level)
   {
     self::$maxLevel = $level;
   }
@@ -53,9 +52,8 @@ class SimpleStaticLogger {
   /**
    * Method for setting of logfiles default folder
    * @param string $folder
-   * @return boolean
    */
-  public static function setLogFolder($folder): void
+  public static function setLogFolder($folder)
   {
     self::$folder = realpath($folder);
   }
