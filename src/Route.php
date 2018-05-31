@@ -148,7 +148,6 @@ abstract class Route {
    */
   protected function getFileLine(): array {
     $dbt = debug_backtrace();
-    echo '<pre>' . var_export($dbt, true) . '</pre>';
     if (isset($dbt[3])) {
       $result['file'] = $dbt[3]['file'];
       $result['line'] = $dbt[3]['line'];
