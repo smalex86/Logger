@@ -21,7 +21,7 @@ Simple logging system suitable with PsrLog.
         }
     ],
     "require": {
-        "smalex86/logger": "1.7.1"
+        "smalex86/logger": "1.7.2"
     }
 }
 ```
