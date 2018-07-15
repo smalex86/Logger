@@ -51,7 +51,7 @@ class FileRoute extends Route {
    * @param array $context
    * @return bool
    */
-  public function log($level, $message, array $context = array()): bool
+  public function log($level, $message, array $context = []): bool
   {
     // if level set in psrloglevel string
     if (is_string($level)) {

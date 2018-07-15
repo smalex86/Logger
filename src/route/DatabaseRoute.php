@@ -13,7 +13,6 @@ namespace smalex86\logger\route;
 
 use PDO;
 use smalex86\logger\Route;
-use smalex86\logger\LoggerException;
 
 /**
  * DatabaseRoute
@@ -88,7 +87,7 @@ class DatabaseRoute extends Route {
   /**
    * @inheritdoc
    */
-  public function log($level, $message, array $context = [])
+  public function log($level, $message, array $context = []): bool
   {
     // if level set in psrloglevel string
     if (is_string($level)) {
@@ -117,7 +116,7 @@ class DatabaseRoute extends Route {
     $statement->bindParam(':message', $message);
     $context = $this->contextStringify($context);
     $statement->bindParam(':context', $context);
-    $statement->execute();
+    return $statement->execute();
   }
   
 }
