@@ -90,7 +90,7 @@ abstract class Route {
    * @param array $context
    * @return bool
    */
-  abstract public function log($level, $message, array $context = array()): bool;
+  abstract public function log($level, $message, array $context = []): bool;
   
   /**
    * Current date

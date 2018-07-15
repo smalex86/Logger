@@ -29,18 +29,18 @@ class SyslogRoute extends Route {
   /**
    * @inheritdoc
    */
-  public function log($level, $message, array $context = [])
+  public function log($level, $message, array $context = []): bool
   {
     $level = $this->getLogLevelFromRsrLogLevel($level);
     if ($level == -1) {
-      return;
+      return false;
     }
     // check for requirement of writing
     // it is determined by log maxLevel and msg level
     if ($this->maxLevel < $level) {
       return false;
     }
-    syslog($level, trim(strtr($this->template, [
+    return syslog($level, trim(strtr($this->template, [
         '{message}' => $message,
         '{context}' => $this->contextStringify($context),
     ])));
