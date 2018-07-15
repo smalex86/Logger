@@ -7,6 +7,7 @@ Simple logging system suitable with PsrLog.
 * route:
     * DatabaseRoute - route for database logging
     * FileRoute - ex SimpleLogger, route for file logging
+    * CachedFileRoute - route for file logging with cache using
     * SyslogRoute - syslog route
 * tests
 
@@ -21,7 +22,7 @@ Simple logging system suitable with PsrLog.
         }
     ],
     "require": {
-        "smalex86/logger": "1.7.2"
+        "smalex86/logger": "1.7.3"
     }
 }
 ```
@@ -40,6 +41,13 @@ $logger->routeList->attach(new smalex86\logger\route\FileRoute([
     'maxLevel' => 7,
     'logFile' => 'test.log',
     'folder' => dirname(__DIR__, 2) . '/logs/'
+]));
+$logger->routeList->attach(new smalex86\logger\route\CachedFileRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7,
+    'logFile' => 'cacheTest.log',
+    'folder' => dirname(__DIR__, 2) . '/logs/',
+    'cacheSize' => 50
 ]));
 $logger->routeList->attach(new smalex86\logger\route\DatabaseRoute([
     'isEnabled' => true,

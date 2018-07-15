@@ -20,6 +20,13 @@ $logger->routeList->attach(new smalex86\logger\route\FileRoute([
     'logFile' => 'test.log',
     'folder' => dirname(__DIR__, 2) . '/logs/'
 ]));
+$logger->routeList->attach(new smalex86\logger\route\CachedFileRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7,
+    'logFile' => 'cacheTest.log',
+    'folder' => dirname(__DIR__, 2) . '/logs/',
+    'cacheSize' => 50
+]));
 $logger->routeList->attach(new smalex86\logger\route\DatabaseRoute([
     'isEnabled' => true,
     'maxLevel' => 6,
