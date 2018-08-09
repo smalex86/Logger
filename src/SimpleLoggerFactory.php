@@ -3,7 +3,6 @@
 namespace smalex86\logger;
 
 use smalex86\logger\Logger;
-use smalex86\logger\route\FileRoute;
 use Psr\Log\LoggerInterface;
 use DateTime;
 
@@ -36,6 +35,11 @@ class SimpleLoggerFactory {
    * @var string
    */
   protected static $dateFormat;
+  /**
+   * It determines to use FileRoute or FileRouteWithPid
+   * @var bool
+   */
+  protected static $withPid;
 
   /**
    * Factory parameters init
@@ -46,12 +50,13 @@ class SimpleLoggerFactory {
    * @param string $dateFormat
    */
   public static function init($maxLevel, $logFilename, $folder, 
-          $dateFormat = DateTime::W3C) 
+          $dateFormat = DateTime::W3C, $withPid = false) 
   {
     self::$maxLevel = $maxLevel;
     self::$logFilename = $logFilename;
     self::$folder = $folder;
     self::$dateFormat = $dateFormat;
+    self::$withPid = $withPid;
   }
 
   /**
@@ -62,7 +67,12 @@ class SimpleLoggerFactory {
   public static function getLogger(): LoggerInterface 
   {
     $logger = new Logger();
-    $logger->routeList->attach(new FileRoute([
+    if (!self::$withPid) {
+        $routeClass = 'smalex86\logger\route\FileRoute';
+    } else {
+        $routeClass = 'smalex86\logger\route\FileRouteWithPid';
+    }
+    $logger->routeList->attach(new $routeClass([
         'dateFormat' => self::$dateFormat,  
         'isEnabled' => true,
         'maxLevel' => self::$maxLevel,
