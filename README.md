@@ -7,6 +7,7 @@ Simple logging system suitable with PsrLog.
 * route:
     * DatabaseRoute - route for database logging
     * FileRoute - ex SimpleLogger, route for file logging
+    * FileRouteWithPid - route for file logging with print of process id into log message
     * CachedFileRoute - route for file logging with cache using
     * SyslogRoute - syslog route
 * tests
