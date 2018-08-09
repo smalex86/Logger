@@ -51,6 +51,7 @@ class SimpleLoggerFactory {
     self::$maxLevel = $maxLevel;
     self::$logFilename = $logFilename;
     self::$folder = $folder;
+    self::$dateFormat = $dateFormat;
   }
 
   /**
