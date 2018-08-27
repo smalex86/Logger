@@ -9,6 +9,7 @@ Simple logging system suitable with PsrLog.
     * ConsoleRoute - route for output log info console (for cli mode)
     * DatabaseRoute - route for database logging
     * FileRoute - ex SimpleLogger, route for file logging
+    * FileRouteWithPid - route for file logging with print of process id into log message
     * SyslogRoute - syslog route
 * tests
 
@@ -23,7 +24,7 @@ Simple logging system suitable with PsrLog.
         }
     ],
     "require": {
-        "smalex86/logger": "1.7.4"
+        "smalex86/logger": "1.7.5"
     }
 }
 ```
