@@ -5,10 +5,11 @@ Simple logging system suitable with PsrLog.
 * SimpleLoggerFactory - factory simple (file) logger
 * SimpleStaticLogger - not suitable with PsrLog
 * route:
+    * CachedFileRoute - route for file logging with cache using
+    * ConsoleRoute - route for output log info console (for cli mode)
     * DatabaseRoute - route for database logging
     * FileRoute - ex SimpleLogger, route for file logging
     * FileRouteWithPid - route for file logging with print of process id into log message
-    * CachedFileRoute - route for file logging with cache using
     * SyslogRoute - syslog route
 * tests
 
@@ -49,6 +50,10 @@ $logger->routeList->attach(new smalex86\logger\route\CachedFileRoute([
     'logFile' => 'cacheTest.log',
     'folder' => dirname(__DIR__, 2) . '/logs/',
     'cacheSize' => 50
+]));
+$logger->routeList->attach(new smalex86\logger\route\ConsoleRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7
 ]));
 $logger->routeList->attach(new smalex86\logger\route\DatabaseRoute([
     'isEnabled' => true,
