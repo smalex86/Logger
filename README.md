@@ -7,6 +7,7 @@ Simple logging system suitable with PsrLog.
 * route:
     * CachedFileRoute - route for file logging with cache using
     * ConsoleRoute - route for output log info console (for cli mode)
+    * ConsoleRouteWithPid - route for output log info console with process id info (for cli mode)
     * DatabaseRoute - route for database logging
     * FileRoute - ex SimpleLogger, route for file logging
     * FileRouteWithPid - route for file logging with print of process id into log message
@@ -52,6 +53,10 @@ $logger->routeList->attach(new smalex86\logger\route\CachedFileRoute([
     'cacheSize' => 50
 ]));
 $logger->routeList->attach(new smalex86\logger\route\ConsoleRoute([
+    'isEnabled' => true,
+    'maxLevel' => 7
+]));
+$logger->routeList->attach(new smalex86\logger\route\ConsoleRouteWithPid([
     'isEnabled' => true,
     'maxLevel' => 7
 ]));
