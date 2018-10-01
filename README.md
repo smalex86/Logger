@@ -16,7 +16,7 @@ Simple logging system suitable with PsrLog.
 
 ## To use this logger write to composer.json: ##
 
-```
+```json
 {
     "repositories": [
         {
@@ -33,11 +33,11 @@ Simple logging system suitable with PsrLog.
 ## And add text below to your project:
 
 Use it with autoloader PSR-4:
-```
+```php
 use smalex86\logger\Logger;
 ```
 If you want to use dynamic object suitable with Psr\Log\LoggerInterface write to project these commands:
-```
+```php
 $logger = new Logger();
 $logger->routeList->attach(new smalex86\logger\route\FileRoute([
     'isEnabled' => true,
@@ -76,7 +76,7 @@ $logger->info('info', ['class'=>'Logger', 'method'=>'getName', '38']); // PsrLog
 ```
 
 ### Some examples ###
-```
+```php
 $logger->emergency('emergency test', ['test'=>'value', '32']);
 $logger->alert('alert test', ['test'=>'value', 1=>'33']);
 $logger->critical('critical test');
