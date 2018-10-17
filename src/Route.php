@@ -144,13 +144,14 @@ abstract class Route {
 
   /**
    * Get file and line from stacktrace in array view
+   * @param int $depth depth of backtrace
    * @return array
    */
-  protected function getFileLine(): array {
+  protected function getFileLine(int $depth = 3): array {
     $dbt = debug_backtrace();
-    if (isset($dbt[3])) {
-      $result['file'] = $dbt[3]['file'];
-      $result['line'] = $dbt[3]['line'];
+    if (isset($dbt[$depth])) {
+      $result['file'] = $dbt[$depth]['file'];
+      $result['line'] = $dbt[$depth]['line'];
     }
     return $result;
   }
