@@ -103,7 +103,7 @@ class CachedFileRoute extends Route {
   protected function getLogLine($level, $message, array $context = array()): string
   {
     // pull file and line
-    $fileLine = $this->getFileLine();
+    $fileLine = $this->getFileLine(4);
     // generate log line
     return trim(strtr($this->template, [
               '{date}' => $this->getDate(),
